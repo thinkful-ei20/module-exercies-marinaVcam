@@ -57,7 +57,14 @@ const shoppingList = (function(){
   
   
   function addItemToShoppingList(itemName) {
-    store.items.push({ id: cuid(), name: itemName, checked: false });
+    try {
+      Item.validateName();
+      Item.create(itemName);
+      store.items.push({ id: cuid(), name: itemName, checked: false });
+      render();
+    } catch(e) {
+      console.log(`Can not add item: ${e.message}`);
+    }
   }
   
   function handleNewItemSubmit() {

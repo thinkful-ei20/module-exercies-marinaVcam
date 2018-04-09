@@ -10,7 +10,10 @@ const Item = (function() {
     }
   }
   function validateName(name) {
-    throw new Error('name does not exist');
+    // console.log(name === 'apples');
+    if (name.length === 0) {
+      throw new Error('name does not exist');
+    }
   }
 
   return {
