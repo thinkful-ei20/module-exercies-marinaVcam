@@ -1,10 +1,19 @@
 'use strict';
 /* global cuid*/
 
-const Items = (function() {
-
+const Item = (function() {
+  function create(name) {
+    return {
+      id: cuid(),
+      name: name,
+      checked: false
+    }
+  }
+  function validateName(name) {
+    throw new Error('name does not exist');
+  }
 
   return {
-
+    create, validateName
   };
 }());
