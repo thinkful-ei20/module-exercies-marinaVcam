@@ -25,6 +25,7 @@ const store = (function() {
 
   const findAndToggleChecked = function(id) {
     const item = this.findById(id);
+    console.log(item);
     item.checked = !item.checked;
   };
 
@@ -42,6 +43,8 @@ const store = (function() {
     const filteredArray = this.items.filter(item => item.id !== id);
     this.items = filteredArray;
   };
+
+  // const
 
   const hideCheckedItems = false;
   const searchTerm = '';
