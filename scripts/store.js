@@ -1,5 +1,5 @@
 'use strict';
-/* global cuid*/
+/* global cuid, Item*/
 
 const store = (function() {
   const items = [
@@ -8,21 +8,26 @@ const store = (function() {
     { id: cuid(), name: 'milk', checked: true },
     { id: cuid(), name: 'bread', checked: false }
   ];
+  
   const findById = function(id) {
     return items.find(el => el.id === id);
   };
+
   const addItem = function(name) {
     try {
       Item.validateName(name);
       const newItem = Item.create(name);
       this.items.push(newItem);
     } catch(e) {
-        console.log(`Cannot find item: ${name}`);
+      console.log(`Cannot find item: ${name}`);
+    }
   };
+
   const findAndToggleChecked = function(id) {
     const item = this.findById(id);
     item.checked = !item.checked;
   };
+
   const findAndUpdateName = function(id, newName) {
     try {
       Item.validateName(newName);
@@ -32,10 +37,24 @@ const store = (function() {
       console.log(`Cannot update name: ${e.message}`);
     }
   };
+
+  const findAndDelete = function(id) {
+    const filteredArray = this.items.filter(item => item.id !== id);
+    this.items = filteredArray;
+  };
+
   const hideCheckedItems = false;
   const searchTerm = '';
+
   return {
-    items, hideCheckedItems, searchTerm, findById
+    items, 
+    hideCheckedItems, 
+    searchTerm, 
+    findById, 
+    addItem, 
+    findAndToggleChecked,
+    findAndUpdateName,
+    findAndDelete,
   };
 }());
 

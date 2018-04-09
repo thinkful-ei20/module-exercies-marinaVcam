@@ -82,24 +82,12 @@ const shoppingList = (function(){
     foundItem.checked = !foundItem.checked;
   }
   
-  
-  // function getItemIdFromElement(item) {
-  //   return $(item)
-  //     .closest('.js-item-element')
-  //     .data('item-id');
-  // }
-  
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
       const id = getItemIdFromElement(event.currentTarget);
       toggleCheckedForListItem(id);
       render();
     });
-  }
-  
-  function deleteListItem(id) {
-    const index = store.items.findIndex(item => item.id === id);
-    store.items.splice(index, 1);
   }
   
   function editListItemName(id, itemName) {
