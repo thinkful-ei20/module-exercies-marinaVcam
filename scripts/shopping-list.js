@@ -83,11 +83,11 @@ const shoppingList = (function(){
   }
   
   
-  function getItemIdFromElement(item) {
-    return $(item)
-      .closest('.js-item-element')
-      .data('item-id');
-  }
+  // function getItemIdFromElement(item) {
+  //   return $(item)
+  //     .closest('.js-item-element')
+  //     .data('item-id');
+  // }
   
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
