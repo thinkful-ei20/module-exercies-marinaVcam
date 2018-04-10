@@ -8,7 +8,7 @@ const store = (function() {
     { id: cuid(), name: 'milk', checked: true },
     { id: cuid(), name: 'bread', checked: false }
   ];
-  
+
   const findById = function(id) {
     return items.find(el => el.id === id);
   };
@@ -23,10 +23,20 @@ const store = (function() {
     }
   };
 
+  // For DOM
+  const toggleCheckedFilter = function() {
+    store.hideCheckedItems = !store.hideCheckedItems;
+  };
+
+  // For State object 
   const findAndToggleChecked = function(id) {
     const item = this.findById(id);
     console.log(item);
     item.checked = !item.checked;
+  };
+
+  const setSearchTerm = function(val) {
+    this.searchTerm = val;
   };
 
   const findAndUpdateName = function(id, newName) {
@@ -44,8 +54,6 @@ const store = (function() {
     this.items = filteredArray;
   };
 
-  // const
-
   const hideCheckedItems = false;
   const searchTerm = '';
 
@@ -55,9 +63,11 @@ const store = (function() {
     searchTerm, 
     findById, 
     addItem, 
+    toggleCheckedFilter,
     findAndToggleChecked,
     findAndUpdateName,
     findAndDelete,
+    setSearchTerm,
   };
 }());
 
