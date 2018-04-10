@@ -8,8 +8,8 @@ const shoppingList = (function(){
     let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
     if (!item.checked) {
       itemTitle = `
-        <form id="js-edit-item">
-          <input class="shopping-item type="text" value="${item.name}" />
+        <form class="js-edit-item">
+          <input aria-label="shopping item" class="shopping-item" type="text" value="${item.name}" />
         </form>
       `;
     }
@@ -79,7 +79,6 @@ const shoppingList = (function(){
       console.log(event.target);
       // console.log(event.currentTarget.closest('').attr(''));
       const itemId = $(event.currentTarget).closest('.js-item-element').data('item-id');
-      // const item = store.findById(itemId);
       store.findAndToggleChecked(itemId);
       render();
     });
@@ -98,9 +97,9 @@ const shoppingList = (function(){
   }
   
   function handleEditShoppingItemSubmit() {
-    $('.js-shopping-list').on('submit', '#js-edit-item', event => {
+    $('.js-shopping-list').on('submit', '.js-edit-item', event => {
       event.preventDefault();
-      const id = getItemIdFromElement(event.currentTarget);
+      const id = $(event.currentTarget).closest('.js-item-element').data('item-id');
       const itemName = $(event.currentTarget).find('.shopping-item').val();
       store.findAndUpdateName(id, itemName);
       render();
