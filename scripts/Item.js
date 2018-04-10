@@ -6,7 +6,8 @@ const Item = (function() {
     return {
       id: cuid(),
       name: name,
-      checked: false
+      checked: false,
+      editingMode: false,
     };
   }
   function validateName(name) {

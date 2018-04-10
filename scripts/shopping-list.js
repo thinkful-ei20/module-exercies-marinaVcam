@@ -5,14 +5,24 @@
 const shoppingList = (function(){
 
   function generateItemElement(item) {
-    let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
-    if (!item.checked) {
+    let itemTitle; // = `<span class="shopping-item">${item.name}</span>`;
+    // item.checked is false AND item.editingMode is true, then show the form
+    if (!item.checked && item.editingMode) {
       itemTitle = `
         <form class="js-edit-item">
-          <input aria-label="shopping item" class="shopping-item" type="text" value="${item.name}" />
+          <input aria-label="shopping item" class="shopping-item" type="text" autofocus="autofocus" value="${item.name}" />
         </form>
       `;
+    } else if (item.checked && !item.editingMode) {
+      // item.checked = true AND item.editingMode = false, display a span
+      itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
+    } else if (!item.checked && !item.editingMode) {
+      // item.checked = false AND item.editingMode = false, display a span
+      itemTitle = `<span class="shopping-item">${item.name}</span>`;
+    } else {
+      throw Error('Should not be checked and in editing mode!');
     }
+
   
     return `
       <li class="js-item-element" data-item-id="${item.id}">
@@ -64,6 +74,15 @@ const shoppingList = (function(){
     }
   }
   
+  function handleEditMode() {
+    $('.js-shopping-list').on('click', '.shopping-item', event => {
+      const itemId = $(event.currentTarget).closest('.js-item-element').data('item-id');
+      const item = store.findById(itemId);
+      item.editingMode = true;
+      render();
+    });
+  }
+
   function handleNewItemSubmit() {
     $('#js-shopping-list-form').submit(function (event) {
       event.preventDefault();
@@ -101,7 +120,9 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = $(event.currentTarget).closest('.js-item-element').data('item-id');
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      store.findAndUpdateName(id, itemName);
+      const item = store.findById(id);
+      store.findAndUpdateName(id , itemName);
+      item.editingMode = false;
       render();
     });
   }
@@ -128,6 +149,7 @@ const shoppingList = (function(){
     handleEditShoppingItemSubmit();
     handleToggleFilterClick();
     handleShoppingListSearch();
+    handleEditMode();
   }
 
   // This object contains the only exposed methods from this module:

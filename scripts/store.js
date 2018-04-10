@@ -3,10 +3,10 @@
 
 const store = (function() {
   const items = [
-    { id: cuid(), name: 'apples', checked: false },
-    { id: cuid(), name: 'oranges', checked: false },
-    { id: cuid(), name: 'milk', checked: true },
-    { id: cuid(), name: 'bread', checked: false }
+    { id: cuid(), name: 'apples', checked: false , editingMode: false},
+    { id: cuid(), name: 'oranges', checked: false, editingMode: false },
+    { id: cuid(), name: 'milk', checked: true, editingMode: false },
+    { id: cuid(), name: 'bread', checked: false, editingMode: false }
   ];
 
   const findById = function(id) {
